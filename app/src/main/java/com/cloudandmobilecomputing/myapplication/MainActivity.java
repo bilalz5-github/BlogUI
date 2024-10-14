@@ -9,13 +9,14 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat; // Import to format date
 import java.util.ArrayList;
+import java.util.Date; // Import to get current date
 
 public class MainActivity extends ListActivity {
     private ArrayList<String> blogEntries; // To hold blog entries
     private EditText userNameInput;         // Input field for user name
     private EditText commentInput;           // Input field for comment
-    private EditText dateInput;              // Input field for date
     private ArrayAdapter<String> adapter;    // Adapter for the ListView
 
     @Override
@@ -31,7 +32,6 @@ public class MainActivity extends ListActivity {
         // Get references to input fields
         userNameInput = findViewById(R.id.userNameInput);
         commentInput = findViewById(R.id.commentInput);
-        dateInput = findViewById(R.id.dateInput);
 
         // Set up the adapter for the ListView
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, blogEntries);
@@ -50,18 +50,14 @@ public class MainActivity extends ListActivity {
     private void addEntry() {
         String userName = userNameInput.getText().toString().trim();
         String comment = commentInput.getText().toString().trim();
-        String date = dateInput.getText().toString().trim();
 
         // Check for empty fields
-        if (userName.isEmpty() || comment.isEmpty() || date.isEmpty()) {
+        if (userName.isEmpty() || comment.isEmpty()) {
             if (userName.isEmpty()) {
                 userNameInput.setBackgroundColor(0xFFFF0000); // Red background
             }
             if (comment.isEmpty()) {
                 commentInput.setBackgroundColor(0xFFFF0000); // Red background
-            }
-            if (date.isEmpty()) {
-                dateInput.setBackgroundColor(0xFFFF0000); // Red background
             }
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
@@ -70,19 +66,23 @@ public class MainActivity extends ListActivity {
         // Reset background colors
         userNameInput.setBackgroundColor(0xFFFFFFFF); // White background
         commentInput.setBackgroundColor(0xFFFFFFFF); // White background
-        dateInput.setBackgroundColor(0xFFFFFFFF); // White background
+
+        // Get the current date and time
+        String currentDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
         // Format the new entry
-        String newEntry = "Entry " + (blogEntries.size() + 1) + " - " + date + ": " + userName + ": " + comment;
+        String newEntry = "Entry " + (blogEntries.size() + 1) + " - " + currentDateTime + ": " + userName + ": " + comment;
 
         // Add the new entry to the list and notify the adapter
         blogEntries.add(0, newEntry); // Add to the top of the list
         adapter.notifyDataSetChanged(); // Refresh the ListView
 
+        // Show a toast with the current date and time
+        Toast.makeText(this, "Entry added at " + currentDateTime, Toast.LENGTH_SHORT).show();
+
         // Clear input fields
         userNameInput.setText("");
         commentInput.setText("");
-        dateInput.setText("");
     }
 
     // Method to handle searching entries (not implemented yet)
