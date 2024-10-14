@@ -1,0 +1,21 @@
+<resources>
+        <string name="app_name">Blog Application</string>
+        <string name="label_user_name">User Name:</string>
+        <string name="hint_user_name">Enter your name</string>
+        <string name="label_comment">Comment:</string>
+        <string name="hint_comment">Enter your comment</string>
+        <string name="label_date">Date:</string>
+        <string name="hint_date">YYYY-MM-DD</string>
+        <string name="button_submit">Submit</string>
+        <string name="label_search">Search by Text:</string>
+        <string name="hint_search">Enter text to search</string>
+        <string name="button_search">Search</string>
+
+        <string-array name="blog_entries">
+                <item>First Blog Entry</item>
+                <item>Second Blog Entry</item>
+                <item>Third Blog Entry</item>
+                <!-- Add more entries as needed -->
+        </string-array>
+
+</resources>
