@@ -18,6 +18,8 @@ public class MainActivity extends ListActivity {
     private EditText userNameInput;         // Input field for user name
     private EditText commentInput;           // Input field for comment
     private ArrayAdapter<String> adapter;    // Adapter for the ListView
+    private EditText searchTextInput;  // Input field for searching text
+    private EditText searchDateInput;   // Input field for searching by date
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,10 @@ public class MainActivity extends ListActivity {
         userNameInput = findViewById(R.id.userNameInput);
         commentInput = findViewById(R.id.commentInput);
 
+        // Initialize search input fields
+        searchTextInput = findViewById(R.id.searchTextInput);
+        searchDateInput = findViewById(R.id.searchDateInput);
+
         // Set up the adapter for the ListView
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, blogEntries);
         setListAdapter(adapter); // No need to find the ListView again
@@ -41,7 +47,7 @@ public class MainActivity extends ListActivity {
         Button submitButton = findViewById(R.id.submitButton);
         submitButton.setOnClickListener(v -> addEntry());
 
-        // Set up the Search button's click listener (currently not implemented)
+        // Set up the Search button's click listener
         Button searchButton = findViewById(R.id.searchButton);
         searchButton.setOnClickListener(v -> searchEntries());
     }
@@ -87,8 +93,30 @@ public class MainActivity extends ListActivity {
 
     // Method to handle searching entries (not implemented yet)
     private void searchEntries() {
-        // Future implementation for searching blog entries
-        Toast.makeText(this, "Search functionality not implemented yet", Toast.LENGTH_SHORT).show();
+        String searchText = searchTextInput.getText().toString().trim();
+        String searchDate = searchDateInput.getText().toString().trim();
+
+        ArrayList<String> filteredEntries = new ArrayList<>(); // To hold filtered entries
+
+        // Loop through all entries to check for matches
+        for (String entry : blogEntries) {
+            boolean matchesText = searchText.isEmpty() || entry.toLowerCase().contains(searchText.toLowerCase());
+            boolean matchesDate = searchDate.isEmpty() || entry.contains(searchDate); // Check if date is part of entry
+
+            if (matchesText && matchesDate) {
+                filteredEntries.add(entry); // Add entry if it matches search criteria
+            }
+        }
+
+        // Update the ListView with filtered entries
+        adapter.clear(); // Clear current list
+        adapter.addAll(filteredEntries); // Add filtered entries
+        adapter.notifyDataSetChanged(); // Notify the adapter of data change
+
+        // Show message if no entries found
+        if (filteredEntries.isEmpty()) {
+            Toast.makeText(this, "No entries found for the given search criteria.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     // Handle list item clicks

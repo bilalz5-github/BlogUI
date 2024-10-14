@@ -33,6 +33,30 @@
         android:layout_height="wrap_content"
         android:text="Submit" />
 
+    <!-- New Search Text Field -->
+    <TextView
+        android:text="Search by Text:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/searchTextInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter text to search" />
+
+    <!-- New Search Date Field -->
+    <TextView
+        android:text="Search by Date (yyyy-MM-dd):"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/searchDateInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter date to search" />
+
     <Button
         android:id="@+id/searchButton"
         android:layout_width="wrap_content"
